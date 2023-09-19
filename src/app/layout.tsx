@@ -1,3 +1,5 @@
+import 'styles/global.scss';
+
 export const metadata = {
   title: 'Meet Your Mentor',
   description: 'A mentorship matching app for students and proffessionals',

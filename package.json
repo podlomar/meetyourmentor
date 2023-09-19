@@ -22,12 +22,14 @@
   "homepage": "https://github.com/podlomar/meetyourmentor#readme",
   "dependencies": {
     "next": "^13.4.19",
+    "normalize.css": "^8.0.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
     "@types/node": "^20.6.2",
     "@types/react": "^18.2.22",
+    "sass": "^1.67.0",
     "typescript": "^5.2.2"
   }
 }

@@ -1,7 +1,9 @@
+import styles from './styles.module.scss';
+
 const HomePage = () => {
   return (
-    <div>
-      <h1>Meet Your Mentor</h1>
+    <div className="container">
+      <h1 className={styles.pageTitle}>Meet Your Mentor</h1>
     </div>
   );
 };
