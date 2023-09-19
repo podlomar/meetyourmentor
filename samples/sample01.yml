@@ -1,0 +1,14 @@
+eventName: 'Kluci a holky'
+size: 3
+teams:
+  name: 'Týmy účastnic'
+  parties:
+    - 'Míša a Jítka'
+    - 'Jana a Petr'
+    - 'Veřa a Lenka'
+mentors:
+  name: 'Mentoři'
+  parties:
+    - 'Radovan'
+    - 'Jaroslav'
+    - 'Kryštof'
