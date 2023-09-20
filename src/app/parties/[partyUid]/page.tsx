@@ -5,25 +5,20 @@ import { notFound } from 'next/navigation'
 const loadParty = async (partyUid: string): Promise<Party | null> => {
   const client = await clientPromise;
   const db = client.db("meetyourmentor");
-  const result = await db.collection('parties').aggregate([
-    {
-      $match: { uid: partyUid },
-    },
-    {
-      $lookup: {
-        from: 'parties',
-        localField: 'prefs',
-        foreignField: '_id',
-        as: 'prefs',
-      },
-    }
-  ]).toArray();
-
-  if (result.length === 0) {
+  const party = await db.collection('parties').findOne({ uid: partyUid }) as Party | null;
+  if (party === null) {
     return null;
   }
-  
-  return result[0] as Party;
+
+  const prefsList = await db
+    .collection('parties')
+    .find({ eventId: party.eventId, side: party.side === 'mentor' ? 'mentee' : 'mentor' })
+    .toArray() as Party[];
+
+  return {
+    ...party,
+    prefsList: party.prefs.map((pref) => prefsList[pref]),
+  } as Party;
 }
 
 interface Props {
@@ -46,7 +41,7 @@ const PartyPage = async ({ params }: Props): Promise<JSX.Element> => {
         : <p>Projekt: {party.project}</p>}
       <h2>Preference</h2>
       <ul>
-        {party.prefs.map(pref => (
+        {party.prefsList.map(pref => (
           <li key={pref.uid}>{pref.names}</li>
         ))}
       </ul>

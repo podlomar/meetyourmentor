@@ -1,37 +1,30 @@
 import clientPromise from 'db/mongo';
-import { MymEvent } from 'db/schema';
+import { Mentee, Mentor, MymEvent } from 'db/schema';
 import { notFound } from 'next/navigation'
 
 const loadEvent = async (eventUid: string): Promise<MymEvent | null> => {
   const client = await clientPromise;
   const db = client.db("meetyourmentor");
-  const result = await db.collection("events").aggregate([
-    { 
-      $match: { uid: eventUid },
-    },
-    {
-      $lookup: {
-        from: 'parties',
-        localField: 'mentors',
-        foreignField: '_id',
-        as: 'mentors',
-      },
-    },
-    {
-      $lookup: {
-        from: 'parties',
-        localField: 'mentees',
-        foreignField: '_id',
-        as: 'mentees',
-      },
-    },
-  ]).toArray();
-  
-  if (result.length === 0) {
+  const event = await db.collection("events").findOne({ uid: eventUid });
+  if (event === null) {
     return null;
   }
 
-  return result[0] as MymEvent;
+  const mentors = await db
+    .collection("parties")
+    .find({ eventId: event._id, side: "mentor" })
+    .toArray() as Mentor[];
+
+  const mentees = await db
+    .collection("parties")
+    .find({ eventId: event._id, side: "mentee" })
+    .toArray() as Mentee[];
+
+  return {
+    ...event,
+    mentors,
+    mentees,
+  } as MymEvent;
 }
 
 interface Props {

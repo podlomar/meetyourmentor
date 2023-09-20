@@ -4,29 +4,25 @@ export type PartySide = 'mentor' | 'mentee';
 
 export interface PartyBase {
   _id: ObjectId;
+  eventId: ObjectId;
   uid: string;
-  names: string;
   side: PartySide;
+  names: string;
+  index: number;
+  pairedWith: number;
+  prefs: number[];
 }
 
-export interface MenteeBase extends PartyBase {
+export interface Mentee extends PartyBase {
   side: 'mentee';
   project: string;
+  prefsList: Mentor[];
 }
 
-export interface MentorBase extends PartyBase {
+export interface Mentor extends PartyBase {
   side: 'mentor';
   company: string;
-}
-
-export interface Mentee extends MenteeBase { 
-  prefs: MentorBase[];
-  pairedWith: number;
-}
-
-export interface Mentor extends MentorBase {
-  prefs: MenteeBase[];
-  pairedWith: number;
+  prefsList: Mentee[];
 }
 
 export type Party = Mentee | Mentor;
@@ -36,6 +32,6 @@ export interface MymEvent {
   name: string;
   uid: string;
   status: 'readyToStart' | 'inProgress' | 'finished';
-  mentors: Party[];
-  mentees: Party[];
+  mentors: Mentor[];
+  mentees: Mentee[];
 }
