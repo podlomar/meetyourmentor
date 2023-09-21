@@ -1,25 +1,5 @@
-import clientPromise from 'db/mongo';
-import { Party } from 'db/schema';
+import { loadParty } from 'db/exchange';
 import { notFound } from 'next/navigation'
-
-const loadParty = async (partyUid: string): Promise<Party | null> => {
-  const client = await clientPromise;
-  const db = client.db("meetyourmentor");
-  const party = await db.collection('parties').findOne({ uid: partyUid }) as Party | null;
-  if (party === null) {
-    return null;
-  }
-
-  const prefsList = await db
-    .collection('parties')
-    .find({ eventId: party.eventId, side: party.side === 'mentor' ? 'mentee' : 'mentor' })
-    .toArray() as Party[];
-
-  return {
-    ...party,
-    prefsList: party.prefs.map((pref) => prefsList[pref]),
-  } as Party;
-}
 
 interface Props {
   params: {

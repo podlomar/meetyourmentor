@@ -1,33 +1,7 @@
-import clientPromise from 'db/mongo';
+import { loadEvent } from 'db/exchange';
 import { notFound } from 'next/navigation'
-import { Mentee, Mentor, MymEvent } from 'db/schema';
 import PartyItem from 'components/PartyItem';
 import styles from './styles.module.scss';
-
-const loadEvent = async (eventUid: string): Promise<MymEvent | null> => {
-  const client = await clientPromise;
-  const db = client.db("meetyourmentor");
-  const event = await db.collection("events").findOne({ uid: eventUid });
-  if (event === null) {
-    return null;
-  }
-
-  const mentors = await db
-    .collection("parties")
-    .find({ eventId: event._id, side: "mentor" })
-    .toArray() as Mentor[];
-
-  const mentees = await db
-    .collection("parties")
-    .find({ eventId: event._id, side: "mentee" })
-    .toArray() as Mentee[];
-
-  return {
-    ...event,
-    mentors,
-    mentees,
-  } as MymEvent;
-}
 
 interface Props {
   params: {
