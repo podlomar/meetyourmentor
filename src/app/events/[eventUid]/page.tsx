@@ -1,6 +1,8 @@
 import clientPromise from 'db/mongo';
-import { Mentee, Mentor, MymEvent } from 'db/schema';
 import { notFound } from 'next/navigation'
+import { Mentee, Mentor, MymEvent } from 'db/schema';
+import PartyItem from 'components/PartyItem';
+import styles from './styles.module.scss';
 
 const loadEvent = async (eventUid: string): Promise<MymEvent | null> => {
   const client = await clientPromise;
@@ -41,23 +43,23 @@ const EventPage = async ({ params }: Props): Promise<JSX.Element> => {
 
   return (
     <div className="container">
-      <h1>{event.name}</h1>
+      <header className={styles.header}>
+        <h1>{event.name}</h1>
+      </header>
+      
       <h2>Mentoři</h2>
-      <ul>
+      <div>
         {event.mentors.map(mentor => (
-          <li key={mentor.uid}>
-            <a href={`/parties/${mentor.uid}`}>{mentor.names}</a>
-          </li>
+          <PartyItem key={mentor.uid} party={mentor} />
         ))}
-      </ul>
+      </div>
+
       <h2>Mentees</h2>
-      <ul>
+      <div>
         {event.mentees.map(mentee => (
-          <li key={mentee.uid}>
-            <a href={`/parties/${mentee.uid}`}>{mentee.names}</a>
-          </li>
+          <PartyItem key={mentee.uid} party={mentee} />
         ))}
-      </ul>
+      </div>
     </div>
   );
 };
