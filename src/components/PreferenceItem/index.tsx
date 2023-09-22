@@ -5,6 +5,7 @@ export interface Preference {
   id: string;
   names: string;
   index: number;
+  title: string;
 }
 
 interface Props {
@@ -14,7 +15,12 @@ interface Props {
 const PreferenceItem = ({ pref }: Props): JSX.Element => {
   return (
     <div className={styles.prefItem}>
-      {pref.names}
+      <div className={styles.title}>
+        {pref.title}
+      </div>
+      <div className={styles.names}>
+        {pref.names}
+      </div>
     </div>
   );
 };
