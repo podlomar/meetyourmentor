@@ -1,3 +1,5 @@
+import { Preference } from 'components/PreferenceItem';
+import PreferenceList from 'components/PreferenceList';
 import { loadParty } from 'db/exchange';
 import { notFound } from 'next/navigation'
 
@@ -13,18 +15,19 @@ const PartyPage = async ({ params }: Props): Promise<JSX.Element> => {
     notFound();
   }
 
+  const preferences = party.prefsList.map((party): Preference => ({
+    id: party.uid,
+    names: party.names,
+    index: party.index,
+  }));
+
   return (
     <div className="container">
       <h1>{party.names}</h1>
       {party.side === 'mentor'
         ? <p>Firma: {party.company}</p>
         : <p>Projekt: {party.project}</p>}
-      <h2>Preference</h2>
-      <ul>
-        {party.prefsList.map(pref => (
-          <li key={pref.uid}>{pref.names}</li>
-        ))}
-      </ul>
+      <PreferenceList prefs={preferences} />
     </div>
   );
 };

@@ -25,11 +25,14 @@
     "next": "^13.5.2",
     "normalize.css": "^8.0.1",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-sortablejs": "^6.1.4",
+    "sortablejs": "^1.15.0"
   },
   "devDependencies": {
     "@types/node": "^20.6.2",
     "@types/react": "^18.2.22",
+    "@types/sortablejs": "^1.15.2",
     "sass": "^1.67.0",
     "typescript": "^5.2.2"
   }

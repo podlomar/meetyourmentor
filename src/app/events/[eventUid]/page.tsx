@@ -1,6 +1,6 @@
 import { loadEvent } from 'db/exchange';
 import { notFound } from 'next/navigation'
-import PartyItem from 'components/PartyItem';
+import PartyLink from 'components/PartyLink';
 import styles from './styles.module.scss';
 
 interface Props {
@@ -24,14 +24,14 @@ const EventPage = async ({ params }: Props): Promise<JSX.Element> => {
       <h2>Mentoři</h2>
       <div>
         {event.mentors.map(mentor => (
-          <PartyItem key={mentor.uid} party={mentor} />
+          <PartyLink key={mentor.uid} party={mentor} />
         ))}
       </div>
 
       <h2>Mentees</h2>
       <div>
         {event.mentees.map(mentee => (
-          <PartyItem key={mentee.uid} party={mentee} />
+          <PartyLink key={mentee.uid} party={mentee} />
         ))}
       </div>
     </div>

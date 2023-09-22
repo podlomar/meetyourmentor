@@ -2,9 +2,12 @@ import { ObjectId } from "mongodb";
 
 export type PartySide = 'mentor' | 'mentee';
 
-export interface PartyBase {
-  _id: ObjectId;
-  eventId: ObjectId;
+export interface Identifiable {
+  _id: string;
+}
+
+export interface PartyBase extends Identifiable {
+  eventId: string;
   uid: string;
   side: PartySide;
   names: string;
@@ -27,8 +30,7 @@ export interface Mentor extends PartyBase {
 
 export type Party = Mentee | Mentor;
 
-export interface MymEvent {
-  _id: ObjectId;
+export interface MymEvent extends Identifiable {
   name: string;
   uid: string;
   status: 'readyToStart' | 'inProgress' | 'finished';

@@ -12,20 +12,20 @@ const getDatabase = async () => {
 
 export const loadEvent = async (eventUid: string): Promise<MymEvent | null> => {
   const db = await getDatabase();
-  const event = await db.collection(EVENTS).findOne({ uid: eventUid });
+  const event = await db.collection(EVENTS).findOne<MymEvent>({ uid: eventUid });
   if (event === null) {
     return null;
   }
 
   const mentors = await db
     .collection(PARTIES)
-    .find({ eventId: event._id, side: "mentor" })
-    .toArray() as Mentor[];
+    .find<Mentor>({ eventId: event._id, side: "mentor" })
+    .toArray();
 
   const mentees = await db
     .collection(PARTIES)
-    .find({ eventId: event._id, side: "mentee" })
-    .toArray() as Mentee[];
+    .find<Mentee>({ eventId: event._id, side: "mentee" })
+    .toArray();
 
   return {
     ...event,
@@ -36,15 +36,15 @@ export const loadEvent = async (eventUid: string): Promise<MymEvent | null> => {
 
 export const loadParty = async (partyUid: string): Promise<Party | null> => {
   const db = await getDatabase();
-  const party = await db.collection(PARTIES).findOne({ uid: partyUid }) as Party | null;
+  const party = await db.collection(PARTIES).findOne<Party>({ uid: partyUid }) as Party | null;
   if (party === null) {
     return null;
   }
 
   const prefsList = await db
     .collection(PARTIES)
-    .find({ eventId: party.eventId, side: party.side === 'mentor' ? 'mentee' : 'mentor' })
-    .toArray() as Party[];
+    .find<Party>({ eventId: party.eventId, side: party.side === 'mentor' ? 'mentee' : 'mentor' })
+    .toArray();
 
   return {
     ...party,
