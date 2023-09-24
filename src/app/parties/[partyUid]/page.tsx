@@ -27,7 +27,7 @@ const PartyPage = async ({ params }: Props): Promise<JSX.Element> => {
   return (
     <div className="container">
       <PartyBanner party={party} />
-      <PreferenceList prefs={preferences} />
+      <PreferenceList partyUid={params.partyUid} prefs={preferences} />
     </div>
   );
 };
