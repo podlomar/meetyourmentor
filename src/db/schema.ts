@@ -4,13 +4,37 @@ export interface Identifiable {
   _id: string;
 }
 
+export interface PartyStatusPrep {
+  phase: 'preparation';
+};
+
+export interface PartyStatusInProgress {
+  phase: 'in-progress';
+};
+
+export interface PartyStatusCommitted {
+  phase: 'committed';
+};
+
+export interface PartyStatusPaired {
+  phase: 'paired';
+  with: number;
+};
+
+export type PartyStatus = (
+  | PartyStatusPrep
+  | PartyStatusInProgress
+  | PartyStatusCommitted
+  | PartyStatusPaired
+);
+
 export interface PartyBase extends Identifiable {
   eventId: string;
   uid: string;
   side: PartySide;
   names: string;
   index: number;
-  pairedWith: number;
+  status: PartyStatus;
   prefs: number[];
 }
 
@@ -28,10 +52,34 @@ export interface Mentor extends PartyBase {
 
 export type Party = Mentee | Mentor;
 
+export interface FinalPairing {
+  mentees: number[];
+}
+
+export interface EventStatusPrep {
+  phase: 'preparation';
+};
+
+export interface EventStatusInProgress {
+  phase: 'in-progress';
+};
+
+export interface EventStatusPaired {
+  phase: 'finished';
+  pairing: FinalPairing;
+};
+
+export type EventStatus = (
+  | EventStatusPrep
+  | EventStatusInProgress
+  | EventStatusPaired
+);
+
 export interface MymEvent extends Identifiable {
   name: string;
   uid: string;
-  status: 'readyToStart' | 'inProgress' | 'finished';
+  size: number;
+  status: EventStatus;
   mentors: Mentor[];
   mentees: Mentee[];
 }

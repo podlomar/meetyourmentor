@@ -1,4 +1,4 @@
-import { Party } from "db/schema";1
+import clsx from "clsx";
 import styles from "./styles.module.scss";
 
 export interface Preference {
@@ -10,11 +10,12 @@ export interface Preference {
 
 interface Props {
   pref: Preference;
+  selected?: boolean;
 }
 
-const PreferenceItem = ({ pref }: Props): JSX.Element => {
+const PreferenceItem = ({ pref, selected = false }: Props): JSX.Element => {
   return (
-    <div className={styles.prefItem}>
+    <div className={clsx(styles.prefItem, selected && styles.selected)}>
       <div className={styles.title}>
         {pref.title}
       </div>

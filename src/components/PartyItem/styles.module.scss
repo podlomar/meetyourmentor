@@ -1,16 +1,17 @@
 @import 'styles/variables.scss';
 
-.prefItem {
+.partyItem {
+  display: block;
   background-color: $palette-2;
   color: white;
   border-radius: 5px;
   padding: 1rem 1rem;
   margin-bottom: 0.5rem;
-  cursor: grab;
-}
 
-.selected {
-  border: 2px solid white;
+  a {
+    color: white;
+    font-size: small;
+  }
 }
 
 .title {
@@ -20,4 +21,5 @@
 .names {
   color: #d9d9d9;
 }
+
 

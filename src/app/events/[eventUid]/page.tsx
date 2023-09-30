@@ -1,7 +1,8 @@
-import { loadEvent } from 'db/exchange';
+import { eventIsCommitted, loadEvent } from 'db/exchange';
 import { notFound } from 'next/navigation'
-import PartyLink from 'components/PartyLink';
+import PartyItem from 'components/PartyItem';
 import styles from './styles.module.scss';
+import Button from 'components/Button';
 
 interface Props {
   params: {
@@ -10,7 +11,9 @@ interface Props {
 }
 
 const EventPage = async ({ params }: Props): Promise<JSX.Element> => {
-  const event = await loadEvent(params.eventUid);
+  const { eventUid } = params;
+  
+  const event = await loadEvent(eventUid);
   if (event === null) {
     notFound();
   }
@@ -21,17 +24,23 @@ const EventPage = async ({ params }: Props): Promise<JSX.Element> => {
         <h1>{event.name}</h1>
       </header>
       
+      { event.status.phase === 'preparation' && <Button>Spustit událost</Button> }
+
+      { eventIsCommitted(event) && <Button href={`/events/${eventUid}/pairing`}>Vytvořit párování</Button> }
+
+      { event.status.phase === 'finished' && <Button href={`/events/${eventUid}/pairing`}>Zobrazit párování</Button> }
+
       <h2>Mentoři</h2>
       <div>
         {event.mentors.map(mentor => (
-          <PartyLink key={mentor.uid} party={mentor} />
+          <PartyItem key={mentor.uid} party={mentor} />
         ))}
       </div>
 
       <h2>Mentees</h2>
       <div>
         {event.mentees.map(mentee => (
-          <PartyLink key={mentee.uid} party={mentee} />
+          <PartyItem key={mentee.uid} party={mentee} />
         ))}
       </div>
     </div>

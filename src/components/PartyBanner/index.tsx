@@ -6,7 +6,7 @@ interface Props {
   party: Party;
 };
 
-const PartyBanner = async ({ party }: Props): Promise<JSX.Element> => {
+const PartyBanner = ({ party }: Props): JSX.Element => {
   return (
     <div className={styles.partyBanner}>
       <div className={clsx(styles.avatar, styles[party.side])} />

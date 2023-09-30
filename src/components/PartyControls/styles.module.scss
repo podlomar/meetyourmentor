@@ -1,0 +1,17 @@
+.partyControls {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.controls {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: flex-end;
+}
+
+.message {
+  padding: 1rem;
+  max-width: 24rem;
+}
