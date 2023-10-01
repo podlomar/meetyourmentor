@@ -10,8 +10,11 @@ const HomePage = async () => {
     const mentorsText = formData.get('mentors') as string;
     const menteestext = formData.get('mentees') as string;
 
-    const mentors = mentorsText.split('\n').filter((line: string) => line.length > 0);
-    const mentees = menteestext.split('\n').filter((line: string) => line.length > 0);
+    const mentors = mentorsText.split(/\r?\n/).filter((line: string) => line.length > 0);
+    const mentees = menteestext.split(/\r?\n/).filter((line: string) => line.length > 0);
+
+    console.log(mentors);
+    console.log(mentees);
 
     const eventUid = await createEvent(name, mentors, mentees);
     redirect(`/events/${eventUid}`);
