@@ -1,5 +1,6 @@
-import { eventIsCommitted, loadEvent } from 'db/exchange';
+import { eventIsCommitted, loadEvent, startEvent } from 'db/exchange';
 import { notFound } from 'next/navigation'
+import { revalidatePath } from 'next/cache'
 import PartyItem from 'components/PartyItem';
 import styles from './styles.module.scss';
 import Button from 'components/Button';
@@ -18,17 +19,31 @@ const EventPage = async ({ params }: Props): Promise<JSX.Element> => {
     notFound();
   }
 
+  const start = async () => {
+    'use server';
+ 
+    await startEvent(eventUid);
+    revalidatePath(`/events/${eventUid}`)
+  }
+
   return (
     <div className="container">
       <header className={styles.header}>
         <h1>{event.name}</h1>
       </header>
       
-      { event.status.phase === 'preparation' && <Button>Spustit událost</Button> }
-
-      { eventIsCommitted(event) && <Button href={`/events/${eventUid}/pairing`}>Vytvořit párování</Button> }
-
-      { event.status.phase === 'finished' && <Button href={`/events/${eventUid}/pairing`}>Zobrazit párování</Button> }
+      { event.status.phase === 'preparation' && (
+        <form action={start}>
+          <Button primary>Spustit událost</Button>
+        </form>
+      )}
+      { event.status.phase === 'in-progress' && (
+          eventIsCommitted(event)
+            ? <Button primary href={`/events/${eventUid}/pairing`}>Vytvořit párování</Button> 
+            : <p>Počkejte, až všichni účastníci odešlou své preference.</p>
+        )
+      }
+      { event.status.phase === 'finished' && <Button primary href={`/events/${eventUid}/pairing`}>Zobrazit párování</Button> }
 
       <h2>Mentoři</h2>
       <div>

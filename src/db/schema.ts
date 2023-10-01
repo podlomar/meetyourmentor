@@ -1,7 +1,9 @@
+import { ObjectId } from "mongodb";
+
 export type PartySide = 'mentor' | 'mentee';
 
 export interface Identifiable {
-  _id: string;
+  _id: ObjectId;
 }
 
 export interface PartyStatusPrep {
@@ -29,7 +31,7 @@ export type PartyStatus = (
 );
 
 export interface PartyBase extends Identifiable {
-  eventId: string;
+  eventId: ObjectId;
   uid: string;
   side: PartySide;
   names: string;

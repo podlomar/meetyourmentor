@@ -5,6 +5,7 @@ const withMDX = nextMDX();
 const nextConfig = {
   experimental: {
     mdxRs: true,
+    serverActions: true,
   },
 }
 

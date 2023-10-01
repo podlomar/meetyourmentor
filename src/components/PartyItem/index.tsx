@@ -6,7 +6,7 @@ interface Props {
   party: Party;
 }
 
-const PartyLink = ({ party }: Props): JSX.Element => {
+const PartyItem = ({ party }: Props): JSX.Element => {
   return (
     <div className={styles.partyItem}>
       <div className={styles.title}>
@@ -23,4 +23,4 @@ const PartyLink = ({ party }: Props): JSX.Element => {
   );
 };
 
-export default PartyLink;
+export default PartyItem;

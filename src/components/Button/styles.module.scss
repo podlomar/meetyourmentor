@@ -14,6 +14,16 @@
   &:hover {
     background-color: $palette-3-light;
   }
+
+  &:disabled {
+    cursor: not-allowed;
+    background-color: $palette-3;
+    border-color: $palette-3-light;
+  }
+
+  &:disabled:hover {
+    background-color: $palette-3;
+  }
 }
 
 .primary {

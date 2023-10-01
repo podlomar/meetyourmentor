@@ -32,6 +32,7 @@ const PartyControls = ({ partyUid, phase, onPhaseChange }: Props): JSX.Element =
   return (
     <div className={styles.partyControls}>
       <p className={styles.message}>
+        { phase === 'preparation' && 'Zkontrolujte, že tato stránka skutečně přísluší vám, a vyčkejte na spuštění události.'}
         { phase === 'in-progress' && 'Seřaďte mentory dle svých preferencí.' }
         { phase === 'checking' && 'Po potvrzení již nebude možné preference změnit.' }
         { phase === 'committed' && 'Vaše preference byly odeslány. Vyčkejte na přiřazení protějšku.' }

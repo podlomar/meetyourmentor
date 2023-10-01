@@ -2,6 +2,7 @@ import clientPromise from 'db/mongo';
 import { FinalPairing, Mentee, Mentor, MymEvent, Party } from 'db/schema';
 import { findBest, scorePairing, scorePairings } from 'lib/score';
 import { Instance, StablePairings } from 'stable-marriages';
+import { nanoid } from 'nanoid';
 
 const DB_NAME = 'meetyourmentor';
 const EVENTS = 'events';
@@ -11,6 +12,75 @@ const getDatabase = async () => {
   const client = await clientPromise;
   return client.db(DB_NAME);
 };
+
+const randomPermutation = (size: number): number[] => {
+  const numbers = new Array(size);
+  for (let i = 0; i < size; i++) {
+    numbers[i] = i;
+  }
+
+  const result = new Array(size);
+  for (let i = 0; i < size; i++) {
+    const index = Math.floor(Math.random() * numbers.length);
+    result[i] = numbers[index];
+    numbers.splice(index, 1);
+  }
+
+  return result;
+}
+
+export const createEvent = async (
+  name: string,
+  mentors: string[],
+  mentees: string[],
+): Promise<string | null> => {
+  if (mentors.length !== mentees.length) {
+    return null;
+  }
+  
+  if (mentors.length % 2 !== 0) {
+    return null;
+  }
+
+  const db = await getDatabase();
+  const eventUid = nanoid(8);
+  const size = mentors.length / 2;
+  
+  const newEventResult = await db.collection(EVENTS).insertOne({
+    name,
+    uid: eventUid,
+    size,
+    status: { phase: 'preparation' },
+  });
+
+  for (let i = 0; i < mentors.length; i+=2) {
+    await db.collection(PARTIES).insertOne({
+      eventId: newEventResult.insertedId,
+      uid: nanoid(8),
+      side: 'mentor',
+      company: mentors[i],
+      names: mentors[i+1],
+      index: i / 2,
+      status: { phase: 'preparation' },
+      prefs: randomPermutation(size),
+    });
+  }
+
+  for (let i = 0; i < mentees.length; i+=2) {
+    await db.collection(PARTIES).insertOne({
+      eventId: newEventResult.insertedId,
+      uid: nanoid(8),
+      side: 'mentee',
+      project: mentees[i],
+      names: mentees[i + 1],
+      index: i / 2,
+      status: { phase: 'preparation' },
+      prefs: randomPermutation(size),
+    });
+  }
+
+  return eventUid;
+}
 
 export const loadEvent = async (eventUid: string): Promise<MymEvent | null> => {
   const db = await getDatabase();
@@ -147,6 +217,23 @@ export const computeFinalPairing = (event: MymEvent): FinalPairing => {
   }
 };
 
+export const startEvent = async (eventUid: string): Promise<void> => {
+  const db = await getDatabase();
+  const event = await loadEvent(eventUid);
+  if (event === null) {
+    return;
+  }
+
+  await db.collection(EVENTS).updateOne(
+    { uid: eventUid }, 
+    { $set: { status: { phase: 'in-progress' } } },
+  );
+
+  await db.collection(PARTIES).updateMany(
+    { eventId: event._id }, { $set: { status: { phase: 'in-progress' } } }
+  );
+}
+
 export const loadFinalPairing = async (eventUid: string): Promise<MymEvent | null> => {
   const db = await getDatabase();
   const event = await loadEvent(eventUid);
@@ -200,4 +287,43 @@ export const loadFinalPairing = async (eventUid: string): Promise<MymEvent | nul
   }
 
   return loadEvent(eventUid);
+}
+
+export const resetEvent = async (eventUid: string): Promise<boolean> => {
+  const db = await getDatabase();
+  const event = await loadEvent(eventUid);
+  if (event === null) {
+    return false;
+  }
+
+  const result = await db.collection(EVENTS).updateOne(
+    { uid: eventUid }, 
+    { $set: { status: { phase: 'preparation' } } },
+  );
+  
+  if (result.modifiedCount !== 1 && result.matchedCount !== 1) {
+    return false;
+  }
+
+  for (const mentor of event.mentors) {
+    const result = await db.collection(PARTIES).updateOne(
+      { uid: mentor.uid }, { $set: { status: { phase: 'preparation' } } }
+    );
+    
+    if (result.modifiedCount !== 1 && result.matchedCount !== 1) {
+      return false;
+    }
+  }
+
+  for (const mentee of event.mentees) {
+    const result = await db.collection(PARTIES).updateOne(
+      { uid: mentee.uid }, { $set: { status: { phase: 'preparation' } } }
+    );
+    
+    if (result.modifiedCount !== 1 && result.matchedCount !== 1) {
+      return false;
+    }
+  }
+
+  return true;
 }
