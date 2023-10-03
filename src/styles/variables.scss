@@ -2,6 +2,11 @@ $palette-1: #272932; // raisin black
 $palette-2: #43454d; // charcoal
 $palette-3: #393b41; // onyx
 $palette-4: #ff6b6b; // light red
+$palette-5: #e8eaf0; // whitish
 
 $palette-3-light: lighten($palette-3, 10%);
 $palette-4-light: lighten($palette-4, 10%);
+
+$item-border-radius: 5px;
+
+$medium-width: 780px;
