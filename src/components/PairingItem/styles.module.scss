@@ -1,0 +1,73 @@
+@import 'styles/variables.scss';
+
+.pairItem {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  background-color: $palette-2;
+  border-radius: $item-border-radius;
+  padding: 1rem 1rem;
+  margin-bottom: 1rem;
+  gap: 1rem;
+  @media (min-width: $medium-width) {
+    gap: 4rem;
+    flex-direction: row;
+  }
+}
+
+.party {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  gap: 1rem;
+}
+
+.icon {
+  width: 2em;
+  height: 2em;
+}
+
+.bold {
+  font-weight: 600;
+}
+
+.match {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  gap: 1rem;
+  right: 2rem;
+  @media (min-width: $medium-width) {
+    position: static;
+    flex-direction: row;
+    align-items: center;
+  }
+}
+
+.pairIndex {
+  background-color: $palette-2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.7;
+  border-radius: 50px;
+  height: 1.5em;
+  width: 1.5em;
+  font-size: 0.9rem;
+  aspect-ratio: 1/1;
+  padding-top: 1px;
+  &Mentor {
+    background-color: #87e1eb28;
+    color: #87E1EB;
+  }
+  &Mentee {
+    background-color: #fff17027;
+    color: #FFF070;
+  }
+}
+
+.info {
+  max-width: 70%;
+}
