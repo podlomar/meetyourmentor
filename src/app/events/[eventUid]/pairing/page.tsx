@@ -20,30 +20,30 @@ const PairingPage = async ({ params }: Props): Promise<JSX.Element> => {
 
   if (event.status.phase !== 'finished') {
     return (
-      <div className="container">
+      <>
         <header className={styles.header}>
           <h1>{event.name}</h1>
         </header>
 
         <p>Parovani</p>
         <p>Parovani jeste neni dokoncene</p>
-      </div>
+      </>
     );
   }
 
   const pairing = event.status.pairing;
 
   return (
-    <div className="container">
+    <>
       <header className={styles.header}>
         <h1>{event.name}</h1>
       </header>
 
-        <h2>Výsledek párování</h2>
-        <div className={styles.info}>
-          <div className={pairingItemStyles.pairIndex}>0</div>
-          <div>Značí skóre párování. 0 znamená, že byl přiřazený mentor/mentee pár u uživatele na prvním místě atd.</div>
-        </div>
+      <h2>Výsledek párování</h2>
+      <div className={styles.info}>
+        <div className={pairingItemStyles.pairIndex}>0</div>
+        <div>Značí skóre párování. 0 znamená, že byl přiřazený mentor/mentee pár u uživatele na prvním místě atd.</div>
+      </div>
       {
         pairing.mentees.map((menteeIndex, mentorIndex) => {
           const mentee = event.mentees[menteeIndex];
@@ -51,12 +51,12 @@ const PairingPage = async ({ params }: Props): Promise<JSX.Element> => {
 
           return (
             <div className={styles.pairing}>
-              <PairingItem mentor={mentor} mentee={mentee}/>
+              <PairingItem mentor={mentor} mentee={mentee} />
             </div>
           );
         })
       }
-    </div>
+    </>
   );
 };
 

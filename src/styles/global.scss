@@ -1,5 +1,6 @@
 @import "normalize.css/normalize.css";
 @import "styles/variables.scss";
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500&display=swap');
 
 * {
   box-sizing: border-box;
@@ -11,8 +12,9 @@
 }
 
 html {
-  font-family: sans-serif;
+  font-family: 'Fira Code', monospace;
   font-size: 16px;
+  font-weight: 400;
   line-height: 1.5;
 }
 
@@ -26,16 +28,16 @@ body {
   max-width: 720px;
   margin-left: auto;
   margin-right: auto;
-  padding-left: 1rem;
-  padding-right: 1rem;
+  padding: 1rem;
 }
 
-h1, h2 {
+h1,
+h2 {
   line-height: 1.2;
 }
 
 h1 {
-  font-size: 1.2rem;  
+  font-size: 1.2rem;
   margin-top: 0;
   margin-bottom: 0.5rem;
 }
@@ -46,7 +48,12 @@ h2 {
   margin-bottom: 1rem;
 }
 
-input[type="text"], textarea {
+button {
+  cursor: pointer;
+}
+
+input[type="text"],
+textarea {
   font-size: 1rem;
   padding: 0.5rem;
   border-radius: 5px;
@@ -62,4 +69,8 @@ input[type="text"], textarea {
 
 .formField {
   margin-bottom: 1rem;
+
+  label {
+    font-weight: 500;
+  }
 }

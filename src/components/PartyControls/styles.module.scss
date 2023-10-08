@@ -1,8 +1,9 @@
 .partyControls {
   display: flex;
-  align-items: baseline;
+  flex-wrap: wrap;
+  align-items: center;
   justify-content: space-between;
-  gap: 1rem;
+  margin: 1rem 0;
 }
 
 .controls {
@@ -12,6 +13,6 @@
 }
 
 .message {
-  padding: 1rem;
-  max-width: 24rem;
+  padding: 0;
+  max-width: 23rem;
 }
