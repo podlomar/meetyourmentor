@@ -1,9 +1,9 @@
 import { Mentee, Mentor } from 'db/schema';
 import styles from './styles.module.scss';
 import Image from 'next/image';
-import mentorImg from '../PartyBanner/img/mentor.svg';
-import menteeImg from '../PartyBanner/img/mentee.svg';
-import pairIcon from './img/pair.svg';
+import mentorImg from 'img/mentor.svg';
+import menteeImg from 'img/mentee.svg';
+import pairIcon from 'img/pair.svg';
 
 interface Props {
   mentor: Mentor;

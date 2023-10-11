@@ -1,7 +1,3 @@
-.pageTitle {
-  color: orange
-}
-
 .textInput {
   width: 100%;
 }
@@ -10,4 +6,8 @@
   width: 100%;
   height: 20rem;
   resize: none;
+}
+
+label.formField {
+  font-weight: 600;
 }

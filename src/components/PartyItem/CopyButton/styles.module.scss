@@ -1,0 +1,17 @@
+@import 'styles/variables.scss';
+
+.copyButton {
+  border: none;
+  border-radius: $item-border-radius;
+  padding: 0.3rem;
+  font-size: 13px;
+  color: $palette-1;
+
+  &:hover {
+    opacity: 0.9;
+  }
+
+  &:active {
+    transform: scale(0.99);
+  }
+}

@@ -15,11 +15,24 @@
 }
 
 .title {
-  font-weight: bold;
+  display: flex;
+  justify-content: space-between;
+  font-weight: 400;
 }
 
 .names {
   color: #d9d9d9;
 }
 
+.link {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.3rem;
+  align-items: center;
+  margin-top: 0.5rem;
+}
 
+.icon {
+  height: 1em;
+}

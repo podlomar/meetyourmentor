@@ -21,9 +21,10 @@ const HomePage = async () => {
   }
 
   return (
-    <div className="container">
+    <>
       <h1 className={styles.pageTitle}>Meet Your Mentor</h1>
-      <p>A mentorship matching app for students and proffessionals</p>
+      <p>Aplikace pro férové spárování mentorů a mentees podle jejich vzájemných preferencí.</p>
+      <p>Začněte vytvořením vaší párovací události.</p>
       <form action={create}>
         <div className="formField">
           <label htmlFor="mentors">Název události</label>
@@ -42,9 +43,10 @@ const HomePage = async () => {
             className={styles.textAreaInput}
             name="mentors"
             required
+            placeholder={`Název organizace\nMentor 1 & Mentor 2\n\nNázev organizace\nMentor 1 & Mentor 2`}
           />
         </div>
-        
+
         <div className="formField">
           <label htmlFor="mentees">Seznam mentees</label>
           <textarea
@@ -52,12 +54,12 @@ const HomePage = async () => {
             className={styles.textAreaInput}
             name="mentees"
             required
+            placeholder={`Název projektu\nMentee 1 & Mentee 2\n\nNázev projektu\nMentee 1 & Mentee 2`}
           />
         </div>
-
-        <Button primary>Create Event</Button>
+        <Button primary>Vytvořit událost</Button>
       </form>
-    </div>
+    </>
   );
 };
 

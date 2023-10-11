@@ -1,4 +1,6 @@
 import 'styles/global.scss';
+import logo from './logo.svg';
+import Image from "next/image";
 
 export const metadata = {
   title: 'Meet Your Mentor',
@@ -12,7 +14,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <div className='container'>
+          <Image src={logo} alt="logo" width={50}></Image>
+          {children}
+        </div>
+      </body>
     </html>
   )
 }
