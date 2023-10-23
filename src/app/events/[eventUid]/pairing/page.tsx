@@ -41,17 +41,25 @@ const PairingPage = async ({ params }: Props): Promise<JSX.Element> => {
 
       <h2>Výsledek párování</h2>
       <div className={styles.info}>
-        <div className={pairingItemStyles.pairIndex}>0</div>
-        <div>Značí skóre párování. 0 znamená, že byl přiřazený mentor/mentee pár u uživatele na prvním místě atd.</div>
+        <div className={pairingItemStyles.pairIndex}>1</div>
+        <div>Značí skóre párování. 1 znamená, že byl přiřazený mentor/mentee pár u uživatele na prvním místě atd.</div>
       </div>
       {
         pairing.mentees.map((menteeIndex, mentorIndex) => {
           const mentee = event.mentees[menteeIndex];
           const mentor = event.mentors[mentorIndex];
 
+          const mentorScore = mentor.prefs.findIndex((p) => p === menteeIndex);
+          const menteeScore = mentee.prefs.findIndex((p) => p === mentorIndex);
+
           return (
             <div className={styles.pairing}>
-              <PairingItem mentor={mentor} mentee={mentee} />
+              <PairingItem 
+                mentor={mentor}
+                menteeScore={menteeScore}
+                mentee={mentee}
+                mentorScore={mentorScore}
+              />
             </div>
           );
         })

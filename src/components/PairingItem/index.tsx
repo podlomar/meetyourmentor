@@ -7,10 +7,12 @@ import pairIcon from 'img/pair.svg';
 
 interface Props {
   mentor: Mentor;
+  mentorScore: number;
   mentee: Mentee;
+  menteeScore: number;
 }
 
-const PairingItem = ({ mentor, mentee }: Props) => (
+const PairingItem = ({ mentor, mentorScore, mentee, menteeScore }: Props) => (
   <div className={styles.pairItem}>
     <div className={styles.party}>
       <Image src={mentorImg} alt="Mentor" className={`${styles.icon} ${styles.iconMentor}`} />
@@ -20,9 +22,9 @@ const PairingItem = ({ mentor, mentee }: Props) => (
       </div>
     </div>
     <div className={styles.match}>
-      <div className={`${styles.pairIndex} ${styles.pairIndexMentor}`}>{mentor.index}</div>
+      <div className={`${styles.pairIndex} ${styles.pairIndexMentor}`}>{mentorScore + 1}</div>
       <Image src={pairIcon} alt="Pair" />
-      <div className={`${styles.pairIndex} ${styles.pairIndexMentee}`}>{mentee.index}</div>
+      <div className={`${styles.pairIndex} ${styles.pairIndexMentee}`}>{menteeScore + 1}</div>
     </div>
     <div className={styles.party}>
       <Image src={menteeImg} alt="Mentee" className={styles.icon} />
