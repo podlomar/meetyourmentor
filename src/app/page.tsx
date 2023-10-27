@@ -2,6 +2,7 @@ import { createEvent } from 'db/exchange';
 import styles from './styles.module.scss';
 import { redirect } from 'next/navigation';
 import Button from 'components/Button';
+import Header from 'components/Header';
 
 const HomePage = async () => {
   const create = async (formData: FormData) => {
@@ -22,7 +23,7 @@ const HomePage = async () => {
 
   return (
     <>
-      <h1 className={styles.pageTitle}>Meet Your Mentor</h1>
+      <Header title="Meet Your Mentor" />
       <p>Aplikace pro férové spárování mentorů a mentees podle jejich vzájemných preferencí.</p>
       <p>Začněte vytvořením vaší párovací události.</p>
       <form action={create}>

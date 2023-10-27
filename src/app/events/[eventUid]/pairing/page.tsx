@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation';
 import styles from './styles.module.scss';
 import pairingItemStyles from 'components/PairingItem/styles.module.scss';
 import PairingItem from 'components/PairingItem';
+import Header from 'components/Header';
 
 interface Props {
   params: {
@@ -35,15 +36,8 @@ const PairingPage = async ({ params }: Props): Promise<JSX.Element> => {
 
   return (
     <>
-      <header className={styles.header}>
-        <h1>{event.name}</h1>
-      </header>
-
+      <Header title={event.name} />
       <h2>Výsledek párování</h2>
-      <div className={styles.info}>
-        <div className={pairingItemStyles.pairIndex}>1</div>
-        <div>Značí skóre párování. 1 znamená, že byl přiřazený mentor/mentee pár u uživatele na prvním místě atd.</div>
-      </div>
       {
         pairing.mentees.map((menteeIndex, mentorIndex) => {
           const mentee = event.mentees[menteeIndex];
