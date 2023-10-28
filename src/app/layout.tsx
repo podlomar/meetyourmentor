@@ -25,9 +25,7 @@ export default function RootLayout({
         <link rel="icon" href="/icon-192.png" sizes="192x192" />
       </head>
       <body>
-        <div className='container'>
-          {children}
-        </div>
+        {children}
       </body>
     </html>
   )

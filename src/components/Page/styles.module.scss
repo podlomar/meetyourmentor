@@ -1,0 +1,51 @@
+@import 'styles/variables.scss';
+
+.container {
+  width: 100%;
+  max-width: 720px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 1rem;
+}
+
+.page {
+  min-height: 100vh;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  width: 2rem;
+  height: 2rem;
+  background-image: url(./img/logo.svg);
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.title {
+  margin-left: 1rem;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #fff;
+}
+
+.footer {
+  margin-top: 2rem;
+  color: gray;
+  background-color: $palette-6;
+  font-size: small;
+  text-align: center;
+
+  a {
+    color: gray;
+  }
+
+  p {
+    margin: 0.25rem 0;
+  }
+}

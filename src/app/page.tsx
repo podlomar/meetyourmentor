@@ -1,8 +1,8 @@
 import { createEvent } from 'db/exchange';
 import styles from './styles.module.scss';
 import { redirect } from 'next/navigation';
+import Page from 'components/Page';
 import Button from 'components/Button';
-import Header from 'components/Header';
 
 const HomePage = async () => {
   const create = async (formData: FormData) => {
@@ -22,8 +22,7 @@ const HomePage = async () => {
   }
 
   return (
-    <>
-      <Header title="Meet Your Mentor" />
+    <Page title="Meet Your Mentor">
       <p>Aplikace pro férové spárování mentorů a mentees podle jejich vzájemných preferencí.</p>
       <p>Začněte vytvořením vaší párovací události.</p>
       <form action={create}>
@@ -60,7 +59,7 @@ const HomePage = async () => {
         </div>
         <Button primary>Vytvořit událost</Button>
       </form>
-    </>
+    </Page>
   );
 };
 

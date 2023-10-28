@@ -5,9 +5,9 @@ import { revalidatePath } from 'next/cache'
 import PartyItem from 'components/PartyItem';
 import styles from './styles.module.scss';
 import Button from 'components/Button';
-import Header from 'components/Header';
 import mentorImg from 'img/mentor.svg';
 import menteeImg from 'img/mentee.svg';
+import Page from 'components/Page';
 
 interface Props {
   params: {
@@ -31,9 +31,7 @@ const EventPage = async ({ params }: Props): Promise<JSX.Element> => {
   }
 
   return (
-    <>
-      <Header title={event.name} />
-
+    <Page title={event.name}>
       <div className={styles.controls}>
         {event.status.phase === 'preparation' && (
           <form className={styles.form} action={start}>
@@ -51,7 +49,7 @@ const EventPage = async ({ params }: Props): Promise<JSX.Element> => {
           <Button primary href={`/events/${eventUid}/pairing`}>Zobrazit párování</Button>
         )}
       </div>
-      
+
       <div className={styles.cardsGrid}>
         <div>
           <div className={styles.heading}>
@@ -77,7 +75,7 @@ const EventPage = async ({ params }: Props): Promise<JSX.Element> => {
           </div>
         </div>
       </div>
-    </>
+    </Page>
   );
 };
 

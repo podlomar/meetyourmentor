@@ -1,4 +1,4 @@
-import Header from 'components/Header';
+import Page from 'components/Page';
 import PartyBanner from 'components/PartyBanner';
 import { Preference } from 'components/PreferenceItem';
 import PreferenceList from 'components/PreferenceList';
@@ -25,15 +25,14 @@ const PartyPage = async ({ params }: Props): Promise<JSX.Element> => {
   }));
 
   return (
-    <div>
-      <Header title={party.side === 'mentor' ? 'Mentor' : 'Mentee'} />
+    <Page title={party.side === 'mentor' ? 'Mentor' : 'Mentee'}>
       <PartyBanner party={party} />
       <PreferenceList
         partyUid={params.partyUid}
         prefs={preferences}
         partyStatus={party.status}
       />
-    </div>
+    </Page>
   );
 };
 

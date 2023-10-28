@@ -1,9 +1,8 @@
 import { loadFinalPairing } from 'db/exchange';
 import { notFound } from 'next/navigation';
 import styles from './styles.module.scss';
-import pairingItemStyles from 'components/PairingItem/styles.module.scss';
 import PairingItem from 'components/PairingItem';
-import Header from 'components/Header';
+import Page from 'components/Page';
 
 interface Props {
   params: {
@@ -21,22 +20,17 @@ const PairingPage = async ({ params }: Props): Promise<JSX.Element> => {
 
   if (event.status.phase !== 'finished') {
     return (
-      <>
-        <header className={styles.header}>
-          <h1>{event.name}</h1>
-        </header>
-
-        <p>Parovani</p>
-        <p>Parovani jeste neni dokoncene</p>
-      </>
+      <Page title={event.name}>
+        <h2>Párováni</h2>
+        <p>Párováni ještě není dokončeno</p>
+      </Page>
     );
   }
 
   const pairing = event.status.pairing;
 
   return (
-    <>
-      <Header title={event.name} />
+    <Page title={event.name}>
       <h2>Výsledek párování</h2>
       {
         pairing.mentees.map((menteeIndex, mentorIndex) => {
@@ -58,7 +52,7 @@ const PairingPage = async ({ params }: Props): Promise<JSX.Element> => {
           );
         })
       }
-    </>
+    </Page>
   );
 };
 
