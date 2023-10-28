@@ -22,9 +22,9 @@ const PairingItem = ({ mentor, mentorScore, mentee, menteeScore }: Props) => (
       </div>
     </div>
     <div className={styles.match}>
-      <div className={`${styles.pairIndex} ${styles.pairIndexMentor}`}>{mentorScore + 1}</div>
+      <div className={`${styles.pairIndex} ${styles.pairIndexMentor}`}>{mentorScore}</div>
       <Image src={pairIcon} alt="Pair" />
-      <div className={`${styles.pairIndex} ${styles.pairIndexMentee}`}>{menteeScore + 1}</div>
+      <div className={`${styles.pairIndex} ${styles.pairIndexMentee}`}>{menteeScore}</div>
     </div>
     <div className={styles.party}>
       <Image src={menteeImg} alt="Mentee" className={styles.icon} />
