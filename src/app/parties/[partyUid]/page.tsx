@@ -1,9 +1,9 @@
+import Page from 'components/Page';
 import PartyBanner from 'components/PartyBanner';
 import { Preference } from 'components/PreferenceItem';
 import PreferenceList from 'components/PreferenceList';
 import { loadParty } from 'db/exchange';
 import { notFound } from 'next/navigation'
-// import styles from './styles.module.scss';
 
 interface Props {
   params: {
@@ -25,14 +25,14 @@ const PartyPage = async ({ params }: Props): Promise<JSX.Element> => {
   }));
 
   return (
-    <div>
+    <Page title={party.side === 'mentor' ? 'Mentor' : 'Mentee'}>
       <PartyBanner party={party} />
       <PreferenceList
         partyUid={params.partyUid}
         prefs={preferences}
         partyStatus={party.status}
       />
-    </div>
+    </Page>
   );
 };
 

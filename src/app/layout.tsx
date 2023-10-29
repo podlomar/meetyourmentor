@@ -1,6 +1,4 @@
 import 'styles/global.scss';
-import logo from './logo.svg';
-import Image from "next/image";
 
 export const metadata = {
   title: 'Meet Your Mentor',
@@ -14,11 +12,20 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <head>
+        <meta charSet="utf-8" />
+        <meta name="viewport" content="width=device-width" />
+
+        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/icon.svg" type="image/svg+xml" />
+        <link rel="icon" href="/icon-32.png" sizes="32x32" />
+        <link rel="icon" href="/icon-128.png" sizes="128x128" />
+        <link rel="icon" href="/icon-180.png" sizes="180x180" />
+        <link rel="apple-touch-icon" href="/icon-180.png" />
+        <link rel="icon" href="/icon-192.png" sizes="192x192" />
+      </head>
       <body>
-        <div className='container'>
-          <Image src={logo} alt="logo" width={50}></Image>
-          {children}
-        </div>
+        {children}
       </body>
     </html>
   )

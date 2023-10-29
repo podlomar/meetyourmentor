@@ -1,12 +1,12 @@
-.header {
-  margin-top: 1.5rem;
+.controls {
+  display: flex;
+  padding: 1rem 0;
 }
 
 .cardsGrid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 2rem;
-  margin-top: 1rem;
 }
 
 .icon {

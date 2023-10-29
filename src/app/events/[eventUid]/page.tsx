@@ -7,6 +7,7 @@ import styles from './styles.module.scss';
 import Button from 'components/Button';
 import mentorImg from 'img/mentor.svg';
 import menteeImg from 'img/mentee.svg';
+import Page from 'components/Page';
 
 interface Props {
   params: {
@@ -30,23 +31,24 @@ const EventPage = async ({ params }: Props): Promise<JSX.Element> => {
   }
 
   return (
-    <>
-      <header className={styles.header}>
-        <h1>{event.name}</h1>
-      </header>
-
-      {event.status.phase === 'preparation' && (
-        <form className={styles.form} action={start}>
-          <Button primary>Spustit událost</Button>
-        </form>
-      )}
-      {event.status.phase === 'in-progress' && (
-        eventIsCommitted(event)
-          ? <Button primary href={`/events/${eventUid}/pairing`}>Vytvořit párování</Button>
-          : <p>Počkejte, až všichni účastníci odešlou své preference.</p>
-      )
-      }
-      {event.status.phase === 'finished' && <Button primary href={`/events/${eventUid}/pairing`}>Zobrazit párování</Button>}
+    <Page title={event.name}>
+      <div className={styles.controls}>
+        {event.status.phase === 'preparation' && (
+          <form className={styles.form} action={start}>
+            <Button primary>Spustit událost</Button>
+          </form>
+        )}
+      
+        {event.status.phase === 'in-progress' && (
+          eventIsCommitted(event)
+            ? <Button primary href={`/events/${eventUid}/pairing`}>Vytvořit párování</Button>
+            : <p>Počkejte, až všichni účastníci odešlou své preference.</p>
+        )}
+      
+        {event.status.phase === 'finished' && (
+          <Button primary href={`/events/${eventUid}/pairing`}>Zobrazit párování</Button>
+        )}
+      </div>
 
       <div className={styles.cardsGrid}>
         <div>
@@ -73,7 +75,7 @@ const EventPage = async ({ params }: Props): Promise<JSX.Element> => {
           </div>
         </div>
       </div>
-    </>
+    </Page>
   );
 };
 

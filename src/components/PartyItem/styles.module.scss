@@ -25,12 +25,8 @@
 }
 
 .link {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  gap: 0.3rem;
-  align-items: center;
-  margin-top: 0.5rem;
+  word-wrap: break-word;
+  margin: 0.5rem 0;
 }
 
 .icon {
