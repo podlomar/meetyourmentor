@@ -16,7 +16,7 @@ interface PairingSummary {
   fairness: number;
 }
 
-export const computePairingSummary = (event: MymEvent, pairing: FinalPairing): PairingSummary => {
+const computePairingSummary = (event: MymEvent, pairing: FinalPairing): PairingSummary => {
   const mentorScores = pairing.mentees.map((menteeIndex, mentorIndex) => {
     const mentor = event.mentors[mentorIndex];
     return mentor.prefs.findIndex((p) => p === menteeIndex) + 1;
