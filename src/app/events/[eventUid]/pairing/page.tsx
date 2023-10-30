@@ -76,27 +76,27 @@ const PairingPage = async ({ params }: Props): Promise<JSX.Element> => {
       <h2>Výsledek párování</h2>
       <div className={styles.summary}>
         <div className={styles.summaryItem}>
-          <div className={styles.summaryItemTitle}>Celkové zklamání</div>
+          <div className={styles.summaryItemTitle}>Celkové zklamání:</div>
           <div className={styles.summaryItemValue}>{summary.regret}</div>
         </div>
         
         <div className={styles.summaryItem}>
-          <div className={styles.summaryItemTitle}>Skóre mentorů</div>
+          <div className={styles.summaryItemTitle}>Skóre mentorů:</div>
           <div className={styles.summaryItemValue}>{summary.mentorsOverallScore}</div>
         </div>
 
         <div className={styles.summaryItem}>
-          <div className={styles.summaryItemTitle}>Skóre mentees</div>
+          <div className={styles.summaryItemTitle}>Skóre mentees:</div>
           <div className={styles.summaryItemValue}>{summary.menteesOverallScore}</div>
         </div>
 
         <div className={styles.summaryItem}>
-          <div className={styles.summaryItemTitle}>Fairness</div>
+          <div className={styles.summaryItemTitle}>Fairness:</div>
           <div className={styles.summaryItemValue}>{summary.fairness}</div>
         </div>
 
         <div className={styles.summaryItem}>
-          <div className={styles.summaryItemTitle}>Celkové skóre</div>
+          <div className={styles.summaryItemTitle}>Celkové skóre:</div>
           <div className={styles.summaryItemValue}>{summary.overallScore}</div>
         </div>
       </div>
