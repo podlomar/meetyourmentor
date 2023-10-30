@@ -29,6 +29,12 @@
   margin: 0.5rem 0;
 }
 
+.linkContainer {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
 .icon {
   height: 1em;
 }
