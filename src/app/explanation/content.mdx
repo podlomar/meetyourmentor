@@ -7,7 +7,7 @@ Párovací algoritmus najde podle několika kritérií optimální párování m
 - **Mentor** - pro naše účely takto označujeme jeden celý mentorský tým, i v případě, že by v něm byly ženy.
 - **Mentee** - jeden celý mentees tým.
 - **Účastník** - mentor nebo mentee.
-- **Skóre účastníka** - pořadí protějšku, se kterým byl účastník spárován v jeho seznamu preferencí. Pokud napřklad mentor získal v párování mentee, která byla na prvním místě v jeho seznamu preferencí, jeho skóre je 0, pokud byla na druhém místě, jeho skóre je 1 atd. Tedy čím menší skóre, tím je účastník spokojenější s výsledkem.
+- **Skóre účastníka** - pořadí protějšku, se kterým byl účastník spárován v jeho seznamu preferencí. Pokud napřklad mentor získal v párování mentee, která byla na prvním místě v jeho seznamu preferencí, jeho skóre je 1, pokud byla na druhém místě, jeho skóre je 2 atd. Tedy čím menší skóre, tím je účastník spokojenější s výsledkem.
 - **Skóre mentorů** - součet skóre všech mentorů v párování.
 - **Skóre mentees** - součet skóre všech mentees v párování.
 - **Nespokojený pár** - dvojice mentor/mentee, kteří nejsou spárováni, ale preferují sebe navzájem před protějšky, které jim byly vybrány. To znamená, že kdyby nespokojený pár byl spolu, obě strany by na tom byly lépe, než jsou teď.
@@ -26,7 +26,7 @@ Může se však snando stát, že stabilních párování existuje pro danou sit
 
 Algoritmus pro nalezení nejlepšího párování pracuje v následujících krocích:
 
-1. Najdi všechna stabilní párování.
+1. Najdi všechna stabilní párování pomocí [rozšířeného Gale-Shapley algoritmu](https://en.wikipedia.org/wiki/Gale%E2%80%93Shapley_algorithm).
 1. Ze stabilních párování vyber všechna s nejmenším celkovým zklamáním.
 1. Z výsledku vyber všechna párování s největší celkovou férovostí.
 1. Z výsledku vyber všechna párování s největší celkovou spokojeností.
