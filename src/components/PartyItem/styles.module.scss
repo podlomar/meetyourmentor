@@ -26,13 +26,14 @@
 
 .link {
   word-wrap: break-word;
-  margin: 0.5rem 0;
+  margin-top: 0.5rem;
 }
 
-.linkContainer {
+.copyButton {
   display: flex;
-  align-items: center;
-  gap: 0.5rem;
+  justify-content: flex-end;
+  position: relative;
+  bottom: 0.8rem;
 }
 
 .icon {
