@@ -9,8 +9,13 @@
   margin-bottom: 0.5rem;
 
   a {
-    color: white;
+    color: $palette-4-light;
     font-size: small;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
   }
 }
 
@@ -25,15 +30,17 @@
 }
 
 .link {
-  word-wrap: break-word;
-  margin-top: 0.5rem;
-}
-
-.copyButton {
   display: flex;
-  justify-content: flex-end;
-  position: relative;
-  bottom: 0.8rem;
+  margin-top: 0.5rem;
+  align-items: center;
+
+  a {
+    white-space: nowrap;
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-left: 0.5rem;
+  }
 }
 
 .icon {

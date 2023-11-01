@@ -100,6 +100,9 @@ const PairingPage = async ({ params }: Props): Promise<JSX.Element> => {
           <div className={styles.summaryItemValue}>{summary.overallScore}</div>
         </div>
       </div>
+
+      <p>Číslo u každého účastníka udává jeho osobní skóre, tedy na jakém místě ve svém seznamu preferencí měl svůj výsledně spárovaný protějšek.</p>
+
       {
         pairing.mentees.map((menteeIndex, mentorIndex) => {
           const mentee = event.mentees[menteeIndex];
