@@ -1,6 +1,9 @@
 @import 'styles/variables.scss';
 
 .btn {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
   border: none;
   outline: none;
   background-color: $palette-3;
@@ -10,7 +13,7 @@
   border: 1px solid $palette-3-light;
   padding: 0.5rem 1rem;
   font-size: 1rem;
-  
+
   &:hover {
     background-color: $palette-3-light;
   }
@@ -29,7 +32,7 @@
 .primary {
   background-color: $palette-4;
   border-color: $palette-4-light;
-  
+
   &:hover {
     background-color: $palette-4-light;
   }
