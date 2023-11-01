@@ -41,12 +41,10 @@ const PartyItem = ({ party }: Props): JSX.Element => {
         {party.names}
       </div>
       <div className={styles.link}>
+        <CopyButton href={`/parties/${party.uid}`} />
         <Link href={`/parties/${party.uid}`} target="_blank">
           {`${process.env.SERVER_URL}/parties/${party.uid}`}
         </Link>
-      </div>
-      <div className={styles.copyButton}>
-        <CopyButton href={`/parties/${party.uid}`} />
       </div>
     </div>
   );
