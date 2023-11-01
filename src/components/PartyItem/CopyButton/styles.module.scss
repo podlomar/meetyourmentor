@@ -2,10 +2,12 @@
 
 .copyButton {
   border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   border-radius: $item-border-radius;
-  padding: 0.3rem;
-  font-size: 13px;
-  color: $palette-1;
+  width: 1.5rem;
+  height: 1.5rem;
 
   &:hover {
     opacity: 0.9;
@@ -14,4 +16,8 @@
   &:active {
     transform: scale(0.99);
   }
+}
+
+.icon {
+  width: 1em;
 }

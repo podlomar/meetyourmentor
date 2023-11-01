@@ -45,7 +45,9 @@ const PartyItem = ({ party }: Props): JSX.Element => {
           {`${process.env.SERVER_URL}/parties/${party.uid}`}
         </Link>
       </div>
-      <CopyButton href={`/parties/${party.uid}`} />
+      <div className={styles.copyButton}>
+        <CopyButton href={`/parties/${party.uid}`} />
+      </div>
     </div>
   );
 };
