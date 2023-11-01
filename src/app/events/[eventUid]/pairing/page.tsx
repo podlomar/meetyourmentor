@@ -17,14 +17,17 @@ interface PairingSummary {
 }
 
 const computePairingSummary = (event: MymEvent, pairing: FinalPairing): PairingSummary => {
-  const mentorScores = pairing.mentees.map((menteeIndex, mentorIndex) => {
-    const mentor = event.mentors[mentorIndex];
-    return mentor.prefs.findIndex((p) => p === menteeIndex) + 1;
-  });
+  const mentorScores: number[] = [];
+  const menteeScores: number[] = [];
 
-  const menteeScores = pairing.mentees.map((menteeIndex, mentorIndex) => {
+  pairing.mentees.forEach((menteeIndex, mentorIndex) => {
+    const mentor = event.mentors[mentorIndex];
+    const mentorScore = mentor.prefs.findIndex((p) => p === menteeIndex) + 1;
+    mentorScores.push(mentorScore);
+
     const mentee = event.mentees[menteeIndex];
-    return mentee.prefs.findIndex((p) => p === mentorIndex) + 1;
+    const menteeScore = mentee.prefs.findIndex((p) => p === mentorIndex) + 1;
+    menteeScores[menteeIndex] = menteeScore;
   });
 
   const menteesOverallScore = menteeScores.reduce((a, b) => a + b, 0);
@@ -115,9 +118,9 @@ const PairingPage = async ({ params }: Props): Promise<JSX.Element> => {
             <div className={styles.pairing}>
               <PairingItem 
                 mentor={mentor}
-                menteeScore={menteeScore}
-                mentee={mentee}
                 mentorScore={mentorScore}
+                mentee={mentee}
+                menteeScore={menteeScore}
               />
             </div>
           );
