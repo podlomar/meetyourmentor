@@ -11,6 +11,17 @@
   padding: 1rem 1rem;
   margin-bottom: 1rem;
   gap: 1rem;
+
+  a {
+    color: $palette-4-light;
+    font-size: small;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
   @media (min-width: $medium-width) {
     gap: 4rem;
     flex-direction: row;
