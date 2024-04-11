@@ -1,52 +1,10 @@
 import { loadFinalPairing } from 'db/exchange';
 import { notFound } from 'next/navigation';
-import { FinalPairing, MymEvent } from 'db/schema';
 import styles from './styles.module.scss';
 import PairingItem from 'components/PairingItem';
 import Page from 'components/Page';
-
-
-interface PairingSummary {
-  menteeScores: number[];
-  mentorScores: number[];
-  menteesOverallScore: number;
-  mentorsOverallScore: number;
-  overallScore: number;
-  regret: number;
-  fairness: number;
-}
-
-const computePairingSummary = (event: MymEvent, pairing: FinalPairing): PairingSummary => {
-  const mentorScores: number[] = [];
-  const menteeScores: number[] = [];
-
-  pairing.mentees.forEach((menteeIndex, mentorIndex) => {
-    const mentor = event.mentors[mentorIndex];
-    const mentorScore = mentor.prefs.findIndex((p) => p === menteeIndex) + 1;
-    mentorScores.push(mentorScore);
-
-    const mentee = event.mentees[menteeIndex];
-    const menteeScore = mentee.prefs.findIndex((p) => p === mentorIndex) + 1;
-    menteeScores[menteeIndex] = menteeScore;
-  });
-
-  const menteesOverallScore = menteeScores.reduce((a, b) => a + b, 0);
-  const mentorsOverallScore = mentorScores.reduce((a, b) => a + b, 0);
-  const overallScore = menteesOverallScore + mentorsOverallScore;
-
-  const regret = Math.max(...menteeScores, ...mentorScores);
-  const fairness = Math.abs(menteesOverallScore - mentorsOverallScore);
-
-  return {
-    menteeScores,
-    mentorScores,
-    menteesOverallScore,
-    mentorsOverallScore,
-    overallScore,
-    regret,
-    fairness,
-  };
-}
+import { computePairingSummary } from 'lib/summary';
+import Button from 'components/Button';
 
 interface Props {
   params: {
@@ -103,6 +61,8 @@ const PairingPage = async ({ params }: Props): Promise<JSX.Element> => {
           <div className={styles.summaryItemValue}>{summary.overallScore}</div>
         </div>
       </div>
+
+      <Button primary href={`pairing/export`}>Stáhnout výsledek (CSV)</Button>
 
       <p>Číslo u každého účastníka udává jeho osobní skóre, tedy na jakém místě ve svém seznamu preferencí měl svůj výsledně spárovaný protějšek.</p>
 
