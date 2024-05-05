@@ -46,12 +46,15 @@ const PreferenceList = ({ partyUid, partyStatus, prefs }: Props): JSX.Element =>
         list={list}
         setList={handleSetList}
         disabled={isDisabled}
+        handle=".dragHandle"
       >
-        {list.map((pref) => (
+        {list.map((pref, index) => (
           <PreferenceItem
             key={pref.id}
             pref={pref}
             selected={partyStatus.phase === 'paired' && partyStatus.with === pref.index} 
+            position={index + 1}
+            bodyClassName="dragHandle"
           />
         ))}
       </ReactSortable>

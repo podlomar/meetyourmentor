@@ -11,16 +11,25 @@ export interface Preference {
 interface Props {
   pref: Preference;
   selected?: boolean;
+  position: number;
+  bodyClassName?: string;
 }
 
-const PreferenceItem = ({ pref, selected = false }: Props): JSX.Element => {
+const PreferenceItem = (
+  { pref, selected = false, position, bodyClassName }: Props
+): JSX.Element => {
   return (
     <div className={clsx(styles.prefItem, selected && styles.selected)}>
-      <div className={styles.title}>
-        {pref.title}
+      <div className={styles.position}>
+        {position}
       </div>
-      <div className={styles.names}>
-        {pref.names}
+      <div className={clsx(styles.body, bodyClassName)}>
+        <div className={styles.title}>
+          {pref.title}
+        </div>
+        <div className={styles.names}>
+          {pref.names}
+        </div>
       </div>
     </div>
   );
