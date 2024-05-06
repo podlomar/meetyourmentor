@@ -234,59 +234,104 @@ export const startEvent = async (eventUid: string): Promise<void> => {
   );
 }
 
-export const loadFinalPairing = async (eventUid: string): Promise<MymEvent | null> => {
+export const computePairing = async (eventUid: string): Promise<boolean> => {
   const db = await getDatabase();
   const event = await loadEvent(eventUid);
   if (event === null) {
-    return null;
+    return false;
   }
 
   if (event.status.phase === 'preparation') {
-    return null;
+    return false;
   }
 
-  if (event.status.phase === 'finished') {
-    return event;
+  if (event.status.phase === 'computed' || event.status.phase === 'published') {
+    return true;
   }
 
   if (!eventIsCommitted(event)) {
-    return null;
+    return false;
   }
   
   const pairing = computeFinalPairing(event);
 
   const result = await db.collection(EVENTS).updateOne(
     { uid: eventUid }, 
-    { $set: { status: { phase: 'finished', pairing } } },
+    { $set: { status: { phase: 'computed', pairing } } },
   );
   
   if (result.modifiedCount !== 1 && result.matchedCount !== 1) {
-    return null;
+    return false;
   }
 
   for (const mentor of event.mentors) {
     const menteeIndex = pairing.mentees[mentor.index];
     const result = await db.collection(PARTIES).updateOne(
-      { uid: mentor.uid }, { $set: { status: { phase: 'paired', with: menteeIndex } } }
+      { uid: mentor.uid }, { $set: { status: { phase: 'computed', with: menteeIndex } } }
     );
     
     if (result.modifiedCount !== 1 && result.matchedCount !== 1) {
-      return null;
+      return false;
     }
   }
 
   for (const mentee of event.mentees) {
     const mentorIndex = pairing.mentees.indexOf(mentee.index);
     const result = await db.collection(PARTIES).updateOne(
+      { uid: mentee.uid }, { $set: { status: { phase: 'computed', with: mentorIndex } } }
+    );
+    
+    if (result.modifiedCount !== 1 && result.matchedCount !== 1) {
+      return false;
+    }
+  }
+
+  return true;
+}
+
+export const publishEvent = async (eventUid: string): Promise<boolean> => {
+  const db = await getDatabase();
+  const event = await loadEvent(eventUid);
+  if (event === null) {
+    return false;
+  }
+
+  if (event.status.phase !== 'computed') {
+    return false;
+  }
+
+  const result = await db.collection(EVENTS).updateOne(
+    { uid: eventUid }, 
+    { $set: { status: { phase: 'published', pairing: event.status.pairing } } },
+  );
+  
+  if (result.modifiedCount !== 1 && result.matchedCount !== 1) {
+    return false;
+  }
+
+  for (const mentor of event.mentors) {
+    const menteeIndex = event.status.pairing.mentees[mentor.index];
+    const result = await db.collection(PARTIES).updateOne(
+      { uid: mentor.uid }, { $set: { status: { phase: 'paired', with: menteeIndex } } }
+    );
+    
+    if (result.modifiedCount !== 1 && result.matchedCount !== 1) {
+      return false;
+    }
+  }
+
+  for (const mentee of event.mentees) {
+    const mentorIndex = event.status.pairing.mentees.indexOf(mentee.index);
+    const result = await db.collection(PARTIES).updateOne(
       { uid: mentee.uid }, { $set: { status: { phase: 'paired', with: mentorIndex } } }
     );
     
     if (result.modifiedCount !== 1 && result.matchedCount !== 1) {
-      return null;
+      return false;
     }
   }
 
-  return loadEvent(eventUid);
+  return true;
 }
 
 export const resetEvent = async (eventUid: string): Promise<boolean> => {
