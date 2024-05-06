@@ -1,14 +1,6 @@
 @import 'styles/variables.scss';
 
 .prefItem {
-  display: flex;
-  align-items: baseline;
-  gap: 1rem;
-  margin-bottom: 0.5rem;
-}
-
-.body {
-  flex: 1;
   background-color: $palette-2;
   color: white;
   border-radius: 5px;
@@ -17,17 +9,15 @@
   flex-direction: column;
   gap: 0.5rem;
   cursor: grab;
+  height: 5rem;
+  margin-bottom: 0.5rem;
 }
 
-.position {
-  width: 2rem;
-  height: 2rem;
-  line-height: 2rem;
-  text-align: center;
-  font-weight: bold;
-  background-color: $palette-5;
-  color: $palette-2;
-  border-radius: 50%;
+.title, .names {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 70vw;
 }
 
 .selected {
