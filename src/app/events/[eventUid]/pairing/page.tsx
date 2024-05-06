@@ -1,10 +1,10 @@
-import { loadFinalPairing } from 'db/exchange';
 import { notFound } from 'next/navigation';
 import styles from './styles.module.scss';
 import PairingItem from 'components/PairingItem';
 import Page from 'components/Page';
 import { computePairingSummary } from 'lib/summary';
 import Button from 'components/Button';
+import { loadEvent } from 'db/exchange';
 
 interface Props {
   params: {
@@ -15,16 +15,25 @@ interface Props {
 const PairingPage = async ({ params }: Props): Promise<JSX.Element> => {
   const { eventUid } = params;
 
-  const event = await loadFinalPairing(eventUid);
+  const event = await loadEvent(eventUid);
   if (event === null) {
     notFound();
   }
 
-  if (event.status.phase !== 'finished') {
+  if (event.status.phase === 'preparation') {
     return (
       <Page title={event.name}>
         <h2>Párováni</h2>
-        <p>Párováni ještě není dokončeno</p>
+        <p>Událost ještě není spuštěna</p>
+      </Page>
+    );
+  }
+
+  if (event.status.phase === 'in-progress') {
+    return (
+      <Page title={event.name}>
+        <h2>Párováni</h2>
+        <p>Událost ještě běží</p>
       </Page>
     );
   }

@@ -18,6 +18,11 @@ export interface PartyStatusCommitted {
   phase: 'committed';
 };
 
+export interface PartyStatusComputed {
+  phase: 'computed';
+  with: number;
+};
+
 export interface PartyStatusPaired {
   phase: 'paired';
   with: number;
@@ -27,6 +32,7 @@ export type PartyStatus = (
   | PartyStatusPrep
   | PartyStatusInProgress
   | PartyStatusCommitted
+  | PartyStatusComputed
   | PartyStatusPaired
 );
 
@@ -66,15 +72,21 @@ export interface EventStatusInProgress {
   phase: 'in-progress';
 };
 
-export interface EventStatusPaired {
-  phase: 'finished';
+export interface EventStatusComputed {
+  phase: 'computed';
   pairing: FinalPairing;
 };
+
+export interface EventStatusPublished {
+  phase: 'published';
+  pairing: FinalPairing;
+}
 
 export type EventStatus = (
   | EventStatusPrep
   | EventStatusInProgress
-  | EventStatusPaired
+  | EventStatusComputed
+  | EventStatusPublished
 );
 
 export interface MymEvent extends Identifiable {
