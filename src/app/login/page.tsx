@@ -4,13 +4,19 @@ import { isAdmin } from 'lib/is-admin';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation'
 
-const LoginPage = async (): Promise<JSX.Element> => {
+interface Props {
+  searchParams: {
+    error?: string;
+  };
+}
+
+const LoginPage = async ({ searchParams }: Props): Promise<JSX.Element> => {
   const login = async (formData: FormData) => {
     'use server';
 
     const password = String(formData.get('password'));
     if (password !== process.env.ADMIN_PWD) {
-      return;
+      redirect('/login?error=invalid_password');
     }
 
     cookies().set('adminPwd', String(password));
@@ -42,6 +48,9 @@ const LoginPage = async (): Promise<JSX.Element> => {
             </label>
             <input autoFocus type="password" name="password" />
           </div>
+          {searchParams.error === 'invalid_password' && (
+            <p className="error">Neplatné heslo!</p>
+          )}
           <Button primary>Přihlásit se</Button>
         </form>
       )}
