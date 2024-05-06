@@ -18,13 +18,11 @@ const PreferenceItem = (
 ): JSX.Element => {
   return (
     <div className={clsx(styles.prefItem, selected && styles.selected)}>
-      <div className={styles.body}>
-        <div className={styles.title}>
-          {pref.title}
-        </div>
-        <div className={styles.names}>
-          {pref.names}
-        </div>
+      <div className={styles.title}>
+        {pref.title}
+      </div>
+      <div className={styles.names}>
+        {pref.names}
       </div>
     </div>
   );
