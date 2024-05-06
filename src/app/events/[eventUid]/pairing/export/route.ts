@@ -8,7 +8,7 @@ export async function GET(request: NextRequest) {
     return new Response('Event not found', { status: 404 });
   }
   
-  if (event.status.phase !== 'finished') {
+  if (event.status.phase !== 'published' && event.status.phase !== 'computed') {
     return new Response('Pairing is not finished yet', { status: 400 });
   }
 

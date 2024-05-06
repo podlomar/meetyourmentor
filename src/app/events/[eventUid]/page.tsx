@@ -1,4 +1,4 @@
-import { eventIsCommitted, loadEvent, startEvent } from 'db/exchange';
+import { computePairing, eventIsCommitted, loadEvent, publishEvent, startEvent } from 'db/exchange';
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import { revalidatePath } from 'next/cache'
@@ -8,6 +8,7 @@ import Button from 'components/Button';
 import mentorImg from 'img/mentor.svg';
 import menteeImg from 'img/mentee.svg';
 import Page from 'components/Page';
+import InfoBox from 'components/InfoBox';
 
 interface Props {
   params: {
@@ -30,25 +31,80 @@ const EventPage = async ({ params }: Props): Promise<JSX.Element> => {
     revalidatePath(`/events/${eventUid}`)
   }
 
+  const compute = async () => {
+    'use server';
+
+    await computePairing(eventUid);
+    revalidatePath(`/events/${eventUid}`)
+  }
+
+  const publish = async () => {
+    'use server';
+
+    await publishEvent(eventUid);
+    revalidatePath(`/events/${eventUid}`)
+  }
+
   return (
     <Page title={event.name}>
-      <div className={styles.controls}>
-        {event.status.phase === 'preparation' && (
+      {event.status.phase === 'preparation' && (
+        <>
+          <InfoBox>
+            <p>Událost čeká na spuštění. Zatím žádný účastník nemůže měnit své preference.</p>
+          </InfoBox>
           <form className={styles.form} action={start}>
-            <Button primary>Spustit událost</Button>
+            <div className={styles.controls}>
+              <Button primary>Spustit událost</Button>
+            </div>
           </form>
-        )}
-      
-        {event.status.phase === 'in-progress' && (
-          eventIsCommitted(event)
-            ? <Button primary href={`/events/${eventUid}/pairing`}>Vytvořit párování</Button>
-            : <p>Počkejte, až všichni účastníci odešlou své preference.</p>
-        )}
-      
-        {event.status.phase === 'finished' && (
-          <Button primary href={`/events/${eventUid}/pairing`}>Zobrazit párování</Button>
-        )}
-      </div>
+        </>
+      )}
+    
+      {event.status.phase === 'in-progress' && (
+        eventIsCommitted(event)
+          ? (
+            <>
+              <InfoBox>
+                <p>Všichni účastníci potvrdili své preference.</p>
+              </InfoBox>
+              <form className={styles.form} action={compute}>
+                <div className={styles.controls}>
+                  <Button primary>Vytvořit párování</Button>
+                </div>
+              </form>
+            </>
+          )
+          : (
+            <InfoBox>
+              <p>Událost je spuštěna. Počkejte, až všichni účastníci odešlou své preference.</p>
+            </InfoBox>
+          )
+      )}
+    
+      {event.status.phase === 'computed' && (
+        <>
+          <InfoBox>
+            <p>Událost je připravena k publikaci výsledků.</p>
+          </InfoBox>
+          <div className={styles.controls}>
+            <form className={styles.form} action={publish}>
+              <Button primary>Publikovat výsledky</Button>
+            </form>
+            <Button href={`/events/${eventUid}/pairing`}>Zobrazit párování</Button>
+          </div>
+        </>
+      )}
+
+      {event.status.phase === 'published' && (
+        <>
+          <InfoBox>
+            <p>Událost je uzavřena. Výsledky párování byly publikovány.</p>
+          </InfoBox>
+          <div className={styles.controls}>
+            <Button primary href={`/events/${eventUid}/pairing`}>Zobrazit párování</Button>
+          </div>
+        </>
+      )}
 
       <div className={styles.cardsGrid}>
         <div>
