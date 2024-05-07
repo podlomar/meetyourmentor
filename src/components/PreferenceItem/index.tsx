@@ -13,7 +13,9 @@ interface Props {
   selected?: boolean;
 }
 
-const PreferenceItem = ({ pref, selected = false }: Props): JSX.Element => {
+const PreferenceItem = (
+  { pref, selected = false }: Props
+): JSX.Element => {
   return (
     <div className={clsx(styles.prefItem, selected && styles.selected)}>
       <div className={styles.title}>
