@@ -21,11 +21,6 @@
       text-decoration: underline;
     }
   }
-
-  @media (min-width: $medium-width) {
-    gap: 4rem;
-    flex-direction: row;
-  }
 }
 
 .party {
@@ -35,13 +30,17 @@
   gap: 1rem;
 }
 
+.names {
+  color: #d9d9d9;
+}
+
+.title {
+  font-weight: 400;
+}
+
 .icon {
   width: 2em;
   height: 2em;
-}
-
-.bold {
-  font-weight: 600;
 }
 
 .match {
@@ -64,8 +63,9 @@
   justify-content: center;
   opacity: 0.7;
   border-radius: 50px;
-  height: 1.5em;
-  width: 1.5em;
+  height: 2rem;
+  width: 2rem;
+  line-height: 2rem;
   font-size: 0.9rem;
   aspect-ratio: 1/1;
   padding-top: 1px;
