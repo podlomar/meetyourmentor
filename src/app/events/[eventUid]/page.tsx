@@ -9,6 +9,7 @@ import mentorImg from 'img/mentor.svg';
 import menteeImg from 'img/mentee.svg';
 import Page from 'components/Page';
 import InfoBox from 'components/InfoBox';
+import { getCommittedCount } from 'lib/summary';
 
 interface Props {
   params: {
@@ -75,9 +76,12 @@ const EventPage = async ({ params }: Props): Promise<JSX.Element> => {
             </>
           )
           : (
-            <InfoBox>
-              <p>Událost je spuštěna. Počkejte, až všichni účastníci odešlou své preference.</p>
-            </InfoBox>
+            <>
+              <InfoBox>
+                <p>Událost je spuštěna. Počkejte, až všichni účastníci odešlou své preference.</p>
+              </InfoBox>
+              <p>Uzavřeno {getCommittedCount(event)} z {event.mentors.length + event.mentees.length}</p>
+            </>
           )
       )}
     

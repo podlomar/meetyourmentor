@@ -1,5 +1,17 @@
 import { FinalPairing, MymEvent } from "db/schema";
 
+export const getCommittedCount = (event: MymEvent): number => {
+  const mentorsFilled = event.mentors.filter(
+    (mentor) => mentor.status.phase === 'committed'
+  ).length;
+
+  const menteesFilled = event.mentees.filter(
+    (mentee) => mentee.status.phase === 'committed'
+  ).length;
+
+  return mentorsFilled + menteesFilled;
+};
+
 export interface PairingSummary {
   menteeScores: number[];
   mentorScores: number[];
