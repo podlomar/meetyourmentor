@@ -9,7 +9,7 @@ import mentorImg from 'img/mentor.svg';
 import menteeImg from 'img/mentee.svg';
 import Page from 'components/Page';
 import InfoBox from 'components/InfoBox';
-import { getCommittedCount } from 'lib/summary';
+import { computePopularities, getCommittedCount } from 'lib/summary';
 
 interface Props {
   params: {
@@ -45,6 +45,8 @@ const EventPage = async ({ params }: Props): Promise<JSX.Element> => {
     await publishEvent(eventUid);
     revalidatePath(`/events/${eventUid}`)
   }
+
+  const pupularities = computePopularities(event);
 
   return (
     <Page title={event.name}>
@@ -117,8 +119,12 @@ const EventPage = async ({ params }: Props): Promise<JSX.Element> => {
             <h2>Mentoři</h2>
           </div>
           <div>
-            {event.mentors.map(mentor => (
-              <PartyItem key={mentor.uid} party={mentor} />
+            {event.mentors.map((mentor, mentorIndex) => (
+              <PartyItem
+                key={mentor.uid}
+                party={mentor} 
+                popularity={pupularities.mentors[mentorIndex]}
+              />
             ))}
           </div>
         </div>
@@ -130,7 +136,11 @@ const EventPage = async ({ params }: Props): Promise<JSX.Element> => {
           </div>
           <div>
             {event.mentees.map(mentee => (
-              <PartyItem key={mentee.uid} party={mentee} />
+              <PartyItem
+                key={mentee.uid}
+                party={mentee}
+                popularity={pupularities.mentees[mentee.index]}
+              />
             ))}
           </div>
         </div>
