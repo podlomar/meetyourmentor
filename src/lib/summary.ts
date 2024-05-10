@@ -1,5 +1,47 @@
 import { FinalPairing, MymEvent } from "db/schema";
 
+export interface Stats {
+  readonly median: number;
+  readonly iqr: number;
+}
+
+export interface Pupularities {
+  readonly mentees: readonly Stats[];
+  readonly mentors: readonly Stats[];
+}
+
+const median = (arr: number[]): number => {
+  const sorted = arr.toSorted((a, b) => a - b);
+  const mid = Math.floor(arr.length / 2);
+  return arr.length % 2 === 0 ? (sorted[mid - 1] + sorted[mid]) / 2 : sorted[mid];
+}
+
+const iqr = (arr: number[]): number => {
+  const sorted = arr.toSorted((a, b) => a - b);
+  const q1 = median(sorted.slice(0, Math.floor(arr.length / 2)));
+  const q3 = median(sorted.slice(Math.ceil(arr.length / 2)));
+  return q3 - q1;
+}
+
+export const computePopularities = (event: MymEvent): Pupularities => {
+  const mentees: Stats[] = [];
+  const mentors: Stats[] = [];
+
+  for (let i = 0; i < event.size; i++) {
+    const menteePrefIndices = event.mentors.map(
+      (mentor) => mentor.prefs.findIndex((p) => p === i) + 1
+    );
+    mentees.push({ median: median(menteePrefIndices), iqr: iqr(menteePrefIndices) });
+
+    const mentorPrefIndices = event.mentees.map(
+      (mentee) => mentee.prefs.findIndex((p) => p === i) + 1
+    );
+    mentors.push({ median: median(mentorPrefIndices), iqr: iqr(mentorPrefIndices) });
+  }
+
+  return { mentees, mentors };
+}
+
 export const getCommittedCount = (event: MymEvent): number => {
   const mentorsFilled = event.mentors.filter(
     (mentor) => mentor.status.phase === 'committed'

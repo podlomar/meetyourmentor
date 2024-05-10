@@ -7,12 +7,14 @@ import clockIcon from "./img/sand-clock.svg";
 import tickIcon from "img/tick.svg";
 import progressIcon from "./img/progress.svg";
 import pairIcon from "img/pair.svg";
+import { Stats } from "lib/summary";
 
 interface Props {
   party: Party;
+  popularity: Stats;
 }
 
-const PartyItem = ({ party }: Props): JSX.Element => {
+const PartyItem = ({ party, popularity }: Props): JSX.Element => {
   const { status: { phase } } = party;
   const renderStatus = (): JSX.Element | null => {
     switch (party.status.phase) {
@@ -26,7 +28,6 @@ const PartyItem = ({ party }: Props): JSX.Element => {
         return null
     }
   }
-
 
   return (
     <div className={styles.partyItem}>
@@ -46,6 +47,9 @@ const PartyItem = ({ party }: Props): JSX.Element => {
           {`${process.env.SERVER_URL}/parties/${party.uid}`}
         </Link>
       </div>
+      <p className={styles.popularity}>
+        Popularity: median = {popularity.median.toFixed(1)}, IQR = {popularity.iqr.toFixed(1)}
+      </p>
     </div>
   );
 };
