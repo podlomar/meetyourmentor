@@ -1,2 +1,5 @@
-# meetyourmentor
-Web application for fait matching between mentors and their teams.
+# Meet Your Mentor
+
+Web application for fair matching between mentors and their teams.
+
+
